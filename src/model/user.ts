@@ -2,7 +2,7 @@ import { Schema, Document } from "mongoose";
 import * as mongoose from "mongoose";
 // import bcrypt from 'bcryptjs';
 
-export interface IUser extends Document {
+export interface IUser/* extends Document*/ {
   username: string;
   // password: string;
   // role: string;
@@ -25,5 +25,5 @@ const userSchema = new Schema({
 //     return result;
 // };
 
-const User = mongoose.model<IUser>("User", userSchema);
+const User = mongoose.model/*<IUser>*/("User", userSchema);
 export default User;

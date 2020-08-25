@@ -58,7 +58,8 @@ export const getAllEvents = (req: Request, res: Response) => {
 export const getOneEvent = (req: Request, res: Response) => {
   const _id = req.params.eventId;
   Event.findById({ _id })
-    .populate("user")
+    .populate([{ path: "participants", model: "User", select: "username" }])
+    .populate([{ path: "transactions", model: "Transaction", select: "title" }]).exec()
     .then((event) => {
       res.send(event);
     })
