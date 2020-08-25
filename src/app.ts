@@ -11,6 +11,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/", require("./route/index"));
 app.use("/api", require("./route/user"));
+app.use("/api", require("./route/event"));
+app.use("/api", require("./route/transaction"));
 
 app.listen(PORT, () => {
   console.log(`Thanks Boss Server listening at ${PORT}`);
