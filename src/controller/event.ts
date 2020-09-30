@@ -47,7 +47,9 @@ export const addTransactionToEvent = (transaction) => {
 
 export const getAllEvents = (req: Request, res: Response) => {
   Event.find()
+    .populate([{ path: "participants", model: "User", select: "username" }])
     .then((event) => {
+      res.set("Access-Control-Allow-Origin", "*");
       res.send(event);
     })
     .catch((error) => {
@@ -59,7 +61,8 @@ export const getOneEvent = (req: Request, res: Response) => {
   const _id = req.params.eventId;
   Event.findById({ _id })
     .populate([{ path: "participants", model: "User", select: "username" }])
-    .populate([{ path: "transactions", model: "Transaction", select: "title" }]).exec()
+    .populate([{ path: "transactions", model: "Transaction", select: "title" }])
+    .exec()
     .then((event) => {
       res.send(event);
     })
