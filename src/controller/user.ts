@@ -1,19 +1,20 @@
 import User, { IUser } from "../model/user";
 import { Request, Response } from "express";
-import bcrypt from "bcrypt";
+// import bcrypt from 'bcrypt'
+const bcrypt = require("bcrypt");
 
-export const createUser = (
-  req: Request,
-  res: Response,
-  email: string,
-  password: string
-) => {
+export const createUser = (req: Request, res: Response) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  console.log(email);
+  console.log(password);
   User.findOne({ email: email })
     .then((user) => {
       if (user) {
         res.status(400).send("email taken");
       } else {
         bcrypt.hash(password, 10, (err, hash) => {
+          // console.log(hash);
           if (err) {
             res.send(err.message);
           } else {
@@ -23,16 +24,16 @@ export const createUser = (
             })
               .then((user: any) => {
                 // res.set("Access-Control-Allow-Origin", "*");
-                res.set("Access-Control-Allow-Origin", "*");
+                // res.set("Access-Control-Allow-Origin", "*");
                 let { email, id } = user;
                 let sessionData = { email, id };
-                console.log(user);
-                // req.session.customer = sessionData;
                 res.json(sessionData);
-                console.log(`user ${user} created in mongoDB`);
+                console.log(sessionData);
+                console.log(`user ${user.email} created in mongoDB`);
               })
               .catch((error) => {
                 res.status(400).send(error);
+                console.log(error);
               });
           }
         });

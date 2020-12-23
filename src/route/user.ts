@@ -1,15 +1,15 @@
 import * as express from "express";
 import { Request, Response } from "express";
-import User, { IUser } from "../model/user";
+import { IUser } from "../model/user";
 import { createUser, getAllUser } from "../controller/user";
 
 const router = express.Router();
 
 router.post("/createUser", (req: Request, res: Response) => {
-  const body: IUser = req.body;
-  const { email, password } = body;
+  // const body: IUser = req.body;
+  // const { email, password } = body;
 
-  createUser(req, res, email, password);
+  createUser(req, res);
 });
 
 router.get("/getAllUsers", (req: Request, res: Response) => {
