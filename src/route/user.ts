@@ -7,9 +7,9 @@ const router = express.Router();
 
 router.post("/createUser", (req: Request, res: Response) => {
   const body: IUser = req.body;
-  const { username } = body;
+  const { email, password } = body;
 
-  createUser(req, res, username);
+  createUser(req, res, email, password);
 });
 
 router.get("/getAllUsers", (req: Request, res: Response) => {
