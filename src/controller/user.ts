@@ -6,30 +6,29 @@ const bcrypt = require("bcrypt");
 export const createUser = (req: Request, res: Response) => {
   const email = req.body.email;
   const password = req.body.password;
-  console.log(email);
-  console.log(password);
+  const firstName = req.body.firstName;
+  const surname = req.body.surname;
   User.findOne({ email: email })
     .then((user) => {
       if (user) {
         res.status(400).send("email taken");
       } else {
         bcrypt.hash(password, 10, (err, hash) => {
-          // console.log(hash);
           if (err) {
             res.send(err.message);
           } else {
             User.create({
-              email: email,
+              firstName,
+              surname,
+              email,
               password: hash,
             })
               .then((user: any) => {
-                // res.set("Access-Control-Allow-Origin", "*");
-                // res.set("Access-Control-Allow-Origin", "*");
-                let { email, id } = user;
-                let sessionData = { email, id };
+                let { firstName, surname, email, id } = user;
+                let sessionData = { firstName, surname, email, id };
                 res.json(sessionData);
                 console.log(sessionData);
-                console.log(`user ${user.email} created in mongoDB`);
+                console.log(`user ${user.firstName} created in mongoDB`);
               })
               .catch((error) => {
                 res.status(400).send(error);

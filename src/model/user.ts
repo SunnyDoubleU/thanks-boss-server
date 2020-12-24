@@ -3,6 +3,8 @@ import * as mongoose from "mongoose";
 // import bcrypt from 'bcryptjs';
 
 export interface IUser /* extends Document*/ {
+  firstName: string;
+  surname: string;
   email: string;
   password: string;
   // role: string;
@@ -10,6 +12,14 @@ export interface IUser /* extends Document*/ {
 }
 
 const userSchema = new Schema({
+  firstName: {
+    type: String,
+    required: true,
+  },
+  surname: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
