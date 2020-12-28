@@ -52,3 +52,28 @@ export const getAllUser = (req: Request, res: Response) => {
       res.status(400).send(error);
     });
 };
+
+export const loginUser = (req: Request, res: Response) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  console.log(email, password);
+  console.log(req.body);
+  User.findOne({ email: email })
+    .then((user: any) => {
+      if (user) {
+        bcrypt.compare(password, user.password, (error, equal) => {
+          if (equal) {
+            let { email, firstName, surname, id } = user;
+            let sessionData = { email, firstName, surname, id };
+            res.json(sessionData);
+            console.log(`user ${email} logged in`);
+          } else {
+            res.status(400).send(error);
+          }
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};

@@ -1,7 +1,7 @@
 import * as express from "express";
 import { Request, Response } from "express";
 import { IUser } from "../model/user";
-import { createUser, getAllUser } from "../controller/user";
+import { createUser, getAllUser, loginUser } from "../controller/user";
 
 const router = express.Router();
 
@@ -16,4 +16,7 @@ router.get("/getAllUsers", (req: Request, res: Response) => {
   getAllUser(req, res);
 });
 
+router.post("/loginUser", (req: Request, res: Response) => {
+  loginUser(req, res);
+});
 module.exports = router;
