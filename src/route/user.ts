@@ -19,4 +19,10 @@ router.get("/getAllUsers", (req: Request, res: Response) => {
 router.post("/loginUser", (req: Request, res: Response) => {
   loginUser(req, res);
 });
+
+router.get("/logoutUser", (req: any, res: Response) => {
+  req.session.destroy();
+  res.send("log out successful");
+  console.log("log out success");
+});
 module.exports = router;

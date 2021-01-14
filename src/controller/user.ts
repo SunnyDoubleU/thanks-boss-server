@@ -53,7 +53,7 @@ export const getAllUser = (req: Request, res: Response) => {
     });
 };
 
-export const loginUser = (req: Request, res: Response) => {
+export const loginUser = (req: any, res: Response) => {
   const email = req.body.email;
   const password = req.body.password;
   console.log(email, password);
@@ -65,6 +65,7 @@ export const loginUser = (req: Request, res: Response) => {
           if (equal) {
             let { email, firstName, surname, id } = user;
             let sessionData = { email, firstName, surname, id };
+            req.session.user = sessionData;
             res.json(sessionData);
             console.log(`user ${email} logged in`);
           } else {
